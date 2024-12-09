@@ -1,5 +1,7 @@
 package view.myComponents;
 
-public class ImageButton {
+import javax.swing.JButton;
+
+public class ImageButton extends JButton{
     
 }
