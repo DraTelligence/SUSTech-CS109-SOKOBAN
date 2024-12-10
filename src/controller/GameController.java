@@ -8,7 +8,6 @@ import view.game.Hero;
 
 /**
  * It is a bridge to combine GamePanel(view) and MapMatrix(model) in one game.
- * You can design several methods about the game logic in this class.
  */
 
 public class GameController {

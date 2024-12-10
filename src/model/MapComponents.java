@@ -2,6 +2,8 @@ package model;
 
 /**
  * a enum class represents different kinds of components of map.
+ * 
+ * @author DraTelligence
  */
 public enum MapComponents {
     SPACE, WALL, TARGET, BOX, PLAYER, BOX_ON_TARGET;

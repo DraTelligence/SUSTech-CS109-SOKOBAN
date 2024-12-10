@@ -7,8 +7,8 @@ import javax.swing.*;
 /**
  * This class is to create basic JComponent.
  */
-public class GameMainFrame extends JFrame {
-    public GameMainFrame() {
+public class MainFrame_desserted extends JFrame {
+    public MainFrame_desserted() {
         super("SOKOBAN");
 
         this.setLayout(null);

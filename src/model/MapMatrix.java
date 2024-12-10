@@ -22,37 +22,36 @@ package model;
  * player on the target location.
  */
 public class MapMatrix {
-    int width,height;
+    private final int width, height;
 
     MapComponents[][] matrix;
 
     public MapMatrix(int[][] inputMatrix) {
-        this.width=inputMatrix.length;
-        this.height=inputMatrix[0].length;
+        this.width = inputMatrix.length;
+        this.height = inputMatrix[0].length;
 
-        this.matrix=new MapComponents[this.width][this.height];
+        this.matrix = new MapComponents[this.width][this.height];
 
-        for(int i=0;i<this.width;i++){
-            for(int j=0;j<this.height;j++){
-                this.matrix[i][j]=MapComponents.valueOf(inputMatrix[i][j]);
+        for (int i = 0; i < this.width; i++) {
+            for (int j = 0; j < this.height; j++) {
+                this.matrix[i][j] = MapComponents.valueOf(inputMatrix[i][j]);
             }
         }
-
     }
 
     public int getWidth() {
-        return this.matrix[0].length;
+        return width;
     }
 
     public int getHeight() {
-        return this.matrix.length;
+        return height;
     }
 
-    public int getId(int row, int col) {
+    public MapComponents getComponet(int row, int col) {
         return matrix[row][col];
     }
 
-    public int[][] getMatrix() {
+    public MapComponents[][] getMatrix() {
         return matrix;
     }
 }

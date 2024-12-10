@@ -1,10 +1,10 @@
 import javax.swing.SwingUtilities;
-import view.GameMainFrame;
+import view.MainFrame;
 
 public class App {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            GameMainFrame mainFrame= new GameMainFrame();
+            MainFrame mainFrame= new MainFrame();
             mainFrame.setVisible(true);
         });
     }
