@@ -5,13 +5,16 @@ package model;
  * matrix =
  * {1, 1, 1, 1, 1, 1},
  * {1, 0, 0, 0, 0, 1},
- * {1, 0, 20, 12, 0, 1},
- * {1, 0, 10, 2, 0, 1},
+ * {1, 0, 4, 5, 0, 1},
+ * {1, 0, 3, 2, 0, 1},
  * {1, 1, 1, 1, 1, 1}
  * The Unit digit number cannot be changed during one game.
- * 1 represents the wall
  * 0 represents the free space
+ * 1 represents the wall
  * 2 represents the target location
+ * 3 represents the box
+ * 4 represents the charactor
+ * 5 represents the box on the taget
  * The Then digit number can be changed during one game.
  * Ten digit 1 represents the box
  * Ten digit 2 represents the hero/player
@@ -20,10 +23,19 @@ package model;
 public class MapMatrix {
     int width,height;
 
-    int[][] matrix;
+    MapComponents[][] matrix;
 
-    public MapMatrix(int[][] matrix) {
-        this.matrix = matrix;
+    public MapMatrix(int[][] inputMatrix) {
+        this.width=inputMatrix.length;
+        this.height=inputMatrix[0].length;
+
+        this.matrix=new MapComponents[this.width][this.height];
+
+        for(int i=0;i<this.width;i++){
+            for(int j=0;j<this.height;j++){
+                this.matrix[i][j]=MapComponents.valueOf(inputMatrix[i][j]);
+            }
+        }
 
     }
 
