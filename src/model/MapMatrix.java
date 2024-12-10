@@ -18,7 +18,8 @@ package model;
  * The Then digit number can be changed during one game.
  * Ten digit 1 represents the box
  * Ten digit 2 represents the hero/player
- * So that 12 represents a box on the target location and 22 represents the player on the target location.
+ * So that 12 represents a box on the target location and 22 represents the
+ * player on the target location.
  */
 public class MapMatrix {
     int width,height;
