@@ -15,10 +15,11 @@ import javax.swing.Timer;
 public class Test2 extends JPanel {
     private static final long serialVersionUID = 1L;
 
-    private final int DELAY = 50;// 转动快慢设置
+    private final int DELAY = 10;// 转动快慢设置
     // private final static Long time = (long) 5000; //窗体关闭事件
     private static Timer timer; // 动画计时器
-    private int x = 0;
+    private long x = 0;
+    final private long timeMark;
 
     /**
      * 调用
@@ -34,7 +35,7 @@ public class Test2 extends JPanel {
         // 窗体定时关闭
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
         }
         // 停止 Timer，使它停止向其侦听器发送动作事件。
@@ -50,6 +51,7 @@ public class Test2 extends JPanel {
      */
     public Test2() {
         timer = new Timer(DELAY, new ReboundListener());
+        timeMark=System.currentTimeMillis();
         timer.start();
     }
 
@@ -59,12 +61,8 @@ public class Test2 extends JPanel {
     private class ReboundListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (x < 360) {
-                // 控制每个DELAY周期旋转的角度，+ 为逆时针 - 为顺时针
-                x = x - 5;
-            } else {
-                x = 0;
-            }
+            x=System.currentTimeMillis()-timeMark;
+            System.out.printf("%d\n",3);
             repaint();
         }
     }
@@ -79,6 +77,14 @@ public class Test2 extends JPanel {
     }
 
     /**
+     * 关于x的函数，令圆呈三次函数变大
+     * @param g
+     */
+    double easeOutSine(int time){
+        return 1-Math.pow(1-((double)time/1000),2);
+    }
+
+    /**
      * 画图形
      */
     private void drawFocus(Graphics g) {
@@ -89,8 +95,9 @@ public class Test2 extends JPanel {
         int width = getWidth();
         int height = getHeight();
 
-        Shape circle= new Ellipse2D.Double(width/2-110, height/2-110, 210, 210);
-        Shape rec= new Rectangle2D.Double(0,0,400,400);
+        double radius=100*easeOutSine((int)x);
+        Shape circle= new Ellipse2D.Double(width/2-radius, height/2-radius, radius*2, radius*2);
+        Shape rec= new Rectangle2D.Double(-1,-1,400,400);
 
         Area a=new Area(rec);
         a.subtract(new Area(circle));
