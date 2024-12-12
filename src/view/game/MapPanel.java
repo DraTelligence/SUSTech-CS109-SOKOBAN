@@ -2,12 +2,16 @@ package view.game;
 
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
-import controller.GameController;
+import javax.swing.JPanel;
+
+import map.MapUtilis;
+
+import java.awt.GridLayout;
 import model.Direction;
 
 public class MapPanel extends ListenerPanel {
     private MapComponent[][] map;
-    private GameController controller;
+    private MapUtilis controller;
     private JLabel stepLabel;
     private int steps;
     private final int GRID_SIZE = 50;
@@ -16,6 +20,9 @@ public class MapPanel extends ListenerPanel {
 
     public MapPanel() {
         JLayeredPane container;
+
+        JPanel base= new JPanel(new GridLayout());
+        JPanel active= new JPanel(new GridLayout());
     }
 
     @Override
@@ -59,7 +66,7 @@ public class MapPanel extends ListenerPanel {
         this.stepLabel = stepLabel;
     }
 
-    public void setController(GameController controller) {
+    public void setController(MapUtilis controller) {
         this.controller = controller;
     }
 

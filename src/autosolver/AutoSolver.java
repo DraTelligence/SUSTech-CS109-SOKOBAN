@@ -1,6 +1,6 @@
 package autosolver;
 
-import controller.GameController;
+import map.MapUtilis;
 import exceptions.AnswerNotFoundException;
 import java.util.ArrayList;
 import model.MapComponents;
@@ -48,24 +48,24 @@ public class AutoSolver {
 
             // add new nodes to the queue
             // up
-            if (GameController.checkMove(currMap, posx, posy, 0, 1)) {
-                bfsList.add(new MapStateNode(GameController.doMove(currMap, posx, posy, 0, 1), currDepth, cnt, posx,
+            if (MapUtilis.checkMove(currMap, posx, posy, 0, 1)) {
+                bfsList.add(new MapStateNode(MapUtilis.doMove(currMap, posx, posy, 0, 1), currDepth, cnt, posx,
                         posy + 1));
             }
             // down
-            if (GameController.checkMove(currMap, posx, posy, 0, -1)) {
-                bfsList.add(new MapStateNode(GameController.doMove(currMap, posx, posy, 0, -1), currDepth, cnt, posx,
+            if (MapUtilis.checkMove(currMap, posx, posy, 0, -1)) {
+                bfsList.add(new MapStateNode(MapUtilis.doMove(currMap, posx, posy, 0, -1), currDepth, cnt, posx,
                         posy - 1));
             }
             // left
-            if (GameController.checkMove(currMap, posx, posy, 1, 0)) {
-                bfsList.add(new MapStateNode(GameController.doMove(currMap, posx, posy, 1, 1), currDepth, cnt, posx + 1,
+            if (MapUtilis.checkMove(currMap, posx, posy, 1, 0)) {
+                bfsList.add(new MapStateNode(MapUtilis.doMove(currMap, posx, posy, 1, 1), currDepth, cnt, posx + 1,
                         posy));
             }
             // right
-            if (GameController.checkMove(currMap, posx, posy, -1, 0)) {
+            if (MapUtilis.checkMove(currMap, posx, posy, -1, 0)) {
                 bfsList.add(
-                        new MapStateNode(GameController.doMove(currMap, posx, posy, -1, 0), currDepth, cnt, posx - 1,
+                        new MapStateNode(MapUtilis.doMove(currMap, posx, posy, -1, 0), currDepth, cnt, posx - 1,
                                 posy));
             }
 
