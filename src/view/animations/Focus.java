@@ -1,4 +1,4 @@
-package view.myComponents;
+package view.animations;
 
 import java.awt.Color;
 import java.awt.Graphics;

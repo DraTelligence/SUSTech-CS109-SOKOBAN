@@ -1,7 +1,8 @@
 package view.game;
 
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import controller.GameController;
-import javax.swing.*;
 import model.Direction;
 
 public class MapPanel extends ListenerPanel {
@@ -13,8 +14,8 @@ public class MapPanel extends ListenerPanel {
 
     private Player hero;
 
-    public MapPanel(){
-
+    public MapPanel() {
+        JLayeredPane container;
     }
 
     @Override
@@ -28,7 +29,7 @@ public class MapPanel extends ListenerPanel {
     @Override
     public void doMoveLeft() {
         System.out.println("Click VK_LEFT");
-        if(controller.doMove(hero.getRow(), hero.getCol(), Direction.LEFT)){
+        if (controller.doMove(hero.getRow(), hero.getCol(), Direction.LEFT)) {
             this.afterMove();
         }
     }
@@ -36,15 +37,15 @@ public class MapPanel extends ListenerPanel {
     @Override
     public void doMoveUp() {
         System.out.println("Click VK_Up");
-       if( controller.doMove(hero.getRow(), hero.getCol(), Direction.UP)){
-           this.afterMove();
-       }
+        if (controller.doMove(hero.getRow(), hero.getCol(), Direction.UP)) {
+            this.afterMove();
+        }
     }
 
     @Override
     public void doMoveDown() {
         System.out.println("Click VK_DOWN");
-        if(controller.doMove(hero.getRow(), hero.getCol(), Direction.DOWN)){
+        if (controller.doMove(hero.getRow(), hero.getCol(), Direction.DOWN)) {
             this.afterMove();
         }
     }
@@ -57,8 +58,6 @@ public class MapPanel extends ListenerPanel {
     public void setStepLabel(JLabel stepLabel) {
         this.stepLabel = stepLabel;
     }
-
-
 
     public void setController(GameController controller) {
         this.controller = controller;

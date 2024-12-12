@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
-import view.myComponents.Focus;
+import view.animations.Focus;
 
 public class Test {
     public static void main(String[] args) throws Exception {
@@ -74,7 +74,7 @@ public class Test {
             container.add(panel, JLayeredPane.DEFAULT_LAYER, 4);
             
             bt.setVisible(true);
-            
+
             jf.setLayout(layout);
             jf.add(container,"container");
             layout.show(jf.getContentPane(),"container");

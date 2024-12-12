@@ -1,4 +1,4 @@
-package view.myComponents;
+package view.animations;
 
 import javax.swing.JComponent;
 import javax.swing.Timer;
