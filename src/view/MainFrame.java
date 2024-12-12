@@ -3,6 +3,7 @@ package view;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
@@ -12,7 +13,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.WindowConstants;
-import view.panels.GamePanel;
+import view.panels.GameMainPanel;
 import view.panels.LevelSelectMenuPanel;
 import view.panels.MainMenuPanel;
 import view.panels.UserSystemPanel;
@@ -25,19 +26,21 @@ public class MainFrame extends JFrame {
     public MainFrame() {
         super("SOKOBAN");
 
+        Dimension size=new Dimension(900,600);
+
         CardLayout layout = new CardLayout();
         this.setLayout(layout);
 
-        this.setBounds(0, 0, 800, 400);
+        this.setSize(size);
         this.setLocationRelativeTo(null);
 
-        GamePanel gamePanel = new GamePanel(layout);
+        GameMainPanel gameMainPanel = new GameMainPanel(size, layout);
         LevelSelectMenuPanel levelSelectMenuPanel = new LevelSelectMenuPanel(layout);
         UserSystemPanel userSystemPanel = new UserSystemPanel(layout);
         MainMenuPanel mainMenuPanel = new MainMenuPanel(layout);
 
-        this.add(mainMenuPanel, "main menu panel");
-        this.add(gamePanel, "game panel");
+        this.add(mainMenuPanel, "menu main panel");
+        this.add(gameMainPanel, "game main panel");
         this.add(userSystemPanel, "user system panel");
         this.add(levelSelectMenuPanel, "level select menu panel");
 
@@ -50,6 +53,8 @@ public class MainFrame extends JFrame {
         });
 
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+
+        layout.show(this.getContentPane(),"menu main panel");
     }
 
     private class CloseDialog extends JDialog {

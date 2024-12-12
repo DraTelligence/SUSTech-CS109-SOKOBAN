@@ -1,42 +1,35 @@
-import java.awt.Dimension;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-/*
- * 2015-06-14
- */
+import java.awt.*;
+import javax.swing.*;
 
 public class Test3 {
+    private static JPanel createPanel(Color bg, int x, int y, int width, int height) {
+        JPanel panel = new JPanel(); // 创建一个JPanel
+        panel.setOpaque(true); // 设置不透明
+        panel.setBackground(bg); // 设置背景颜色
+        panel.setBounds(x, y, width, height); // 设置面板的位置和宽高
+        return panel;
+    }
 
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
+        JFrame frame = new JFrame();
+        frame.setTitle("Demo01"); // 设置窗口标题
+        frame.setSize(400, 300); // 设置窗口显示大小
 
-        //设置panel的layout以及sieze
-        JPanel jpanel = new JPanel();
-        System.out.println("default PreferredSize is " + jpanel.getPreferredSize());
-        System.out.println("default Size is " + jpanel.getSize());
-        jpanel.setLayout(null);
-        System.out.println("In null layout, the PreferredSize is " + jpanel.getPreferredSize());
-        System.out.println("In null layout, the Size is " + jpanel.getSize());
-        jpanel.setPreferredSize(new Dimension(400, 400));
-        //添加按钮
-        JButton button11 = new JButton("setBounds");
-        JButton button12 = new JButton("setLocationAndSetSize");
-        
-        button11.setBounds(20, 20, 100, 100);
-        button12.setLocation(250, 250);
-        button12.setSize(100, 100);
-        
-        jpanel.add(button11);
-        jpanel.add(button12);
-        
-        // 设置窗体属性
-        JFrame frame = new JFrame("setBoundsDemo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(jpanel);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        JLayeredPane layeredPane = new JLayeredPane(); // 创建层级面板
+
+        JPanel panel01 = createPanel(Color.RED, 90, 30, 100, 100);
+        layeredPane.add(panel01, 1);
+        JPanel panel02 = createPanel(Color.YELLOW, 150, 50, 100, 100);
+        layeredPane.add(panel02, 2, 0);
+        JPanel panel03 = createPanel(Color.BLUE, 120, 90, 100, 100);
+        layeredPane.add(panel03, 3, 1);
+        JPanel panel04 = createPanel(Color.GREEN, 170, 110, 100, 100);
+        layeredPane.add(panel04, 5 ,1);
+
+        frame.add(layeredPane);
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 设置窗口默认关闭操作
+        frame.setLocationRelativeTo(null); // 相对屏幕居中
+        frame.setVisible(true); // 设置窗口可见
     }
 }

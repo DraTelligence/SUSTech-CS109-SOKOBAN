@@ -3,7 +3,6 @@ package user;
 import exceptions.PswdIncorrectException;
 import java.io.Serial;
 import java.io.Serializable;
-import model.MapMatrix;
 
 //储存用户信息，提供从读取存档文件创建user
 public class User implements Serializable{

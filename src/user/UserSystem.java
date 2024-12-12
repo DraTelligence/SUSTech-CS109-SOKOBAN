@@ -10,7 +10,6 @@ import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import model.MapMatrix;
 
 //管理user的工具类
 public class UserSystem {
