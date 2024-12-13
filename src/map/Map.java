@@ -4,10 +4,13 @@ import java.util.Arrays;
 import model.Direction;
 import model.MapComponents;
 
+// TODO:支持callback方法，主动告知计算完毕
+
 @SuppressWarnings("FieldMayBeFinal")
 public class Map {
     private MapComponents[][] map;
     private int posX, posY;
+    static final int PRIME_FOR_HASHCODE = 31;
 
     public Map(MapComponents[][] map, int posx, int posy) {
         this.map = map;
@@ -17,11 +20,10 @@ public class Map {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
         int result = 1;
-        result = prime * result + Arrays.deepHashCode(map);
-        result = prime * result + posX;
-        result = prime * result + posY;
+        result = PRIME_FOR_HASHCODE * result + Arrays.deepHashCode(map);
+        result = PRIME_FOR_HASHCODE * result + posX;
+        result = PRIME_FOR_HASHCODE * result + posY;
         return result;
     }
 
@@ -46,7 +48,7 @@ public class Map {
         return this.map[this.posY + direction.getY()][this.posX + direction.getX()];
     }
 
-    public MapComponents[][] getMap() {
+    public MapComponents[][] getMapComponentsMatrix() {
         return map;
     }
 

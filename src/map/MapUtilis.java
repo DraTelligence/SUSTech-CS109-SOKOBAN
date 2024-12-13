@@ -48,7 +48,7 @@ public class MapUtilis {
             System.out.println("Let's push it!");
 
             // set the mapComponents
-            MapComponents[][] newMap =currMap.getMap();
+            MapComponents[][] newMap =currMap.getMapComponentsMatrix();
             
             // push the crate
             if(currMap.get(direction.getX()*2, direction.getY()*2)==MapComponents.SPACE){
@@ -70,7 +70,7 @@ public class MapUtilis {
 
             return new Map(newMap,newX,newY);
         }else{
-            return new Map(currMap.getMap(),newX,newY);
+            return new Map(currMap.getMapComponentsMatrix(),newX,newY);
         }
     }
 
@@ -83,9 +83,9 @@ public class MapUtilis {
     static public boolean checkVictory(Map map) {
         boolean flag = true;
 
-        for (int y = 1; y < map.getMap().length - 1; y++) {
-            for (int x = 1; x < map.getMap()[0].length - 1; x++) {
-                if (map.getMap()[y][x] == MapComponents.BOX) {
+        for (int y = 1; y < map.getMapComponentsMatrix().length - 1; y++) {
+            for (int x = 1; x < map.getMapComponentsMatrix()[0].length - 1; x++) {
+                if (map.getMapComponentsMatrix()[y][x] == MapComponents.BOX) {
                     flag = false;
                 }
             }
@@ -119,6 +119,7 @@ public class MapUtilis {
      * @param levelNum
      * @return
      */
+    @SuppressWarnings("ConvertToTryWithResources")
     static public Map getMap(int levelNum) {
         String dir = "data\\maps\\";
         String fileName = "level" + levelNum;
@@ -147,6 +148,8 @@ public class MapUtilis {
             posx = sc.nextInt();
 
             result = new Map(map, posx, posy);
+
+            sc.close();
 
             return result;
         } catch (FileNotFoundException e) {

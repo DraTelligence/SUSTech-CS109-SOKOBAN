@@ -1,16 +1,17 @@
 package autosolver;
 
-import map.MapUtilis;
 import exceptions.AnswerNotFoundException;
 import java.util.ArrayList;
-import model.MapComponents;
+import java.util.HashSet;
 import map.Map;
+import map.MapUtilis;
+import model.Direction;
+import model.MapComponents;
 
 @SuppressWarnings("FieldMayBeFinal")
 public class AutoSolver {
     private ArrayList<MapStateNode> bfsList;
     private Map currMap;
-    private int cnt;
 
     public AutoSolver(Map map) {
         this.bfsList = new ArrayList<>(64);
@@ -21,65 +22,62 @@ public class AutoSolver {
     public ArrayList<MapComponents[][]> solve() throws AnswerNotFoundException {
         MapStateNode currNode;
         int currDepth;
+        int cnt = 0;
 
-        while (bfsList.get(cnt)!=null) {
+        while (bfsList.get(cnt) != null) {
             currNode = bfsList.get(cnt);
             currMap = currNode.getMap();
             currDepth = currNode.getDepth();
+            HashSet<Integer> visited = new HashSet<>();
+            Map newMap;
 
-            // check if the currMap is true
-            if (check()) {
-                int totSteps = (int) bfsList.get(cnt).getDepth();
-                ArrayList<MapComponents[][]> ansList = new ArrayList<>(totSteps + 1);
+            // check if victory has been reached
+            if (MapUtilis.checkVictory(currMap)) {
+                int totSteps = bfsList.get(cnt).getDepth() + 1;
+
+                ArrayList<MapComponents[][]> ansList = new ArrayList<>(totSteps);
 
                 for (int next = cnt; next != 0; next = bfsList.get(next).getFather()) {
-                    ansList.set(bfsList.get(next).getDepth(), bfsList.get(next).getMap());
+                    ansList.set(bfsList.get(next).getDepth(), bfsList.get(next).getMap().getMapComponentsMatrix());
                 }
 
                 return ansList;
             }
 
             // add new nodes to the queue
+            // values() may use too much storage
             // up
-            if (MapUtilis.checkMove(currMap, posx, posy, 0, 1)) {
-                bfsList.add(new MapStateNode(MapUtilis.doMove(currMap, posx, posy, 0, 1), currDepth, cnt, posx,
-                        posy + 1));
+            if (MapUtilis.checkMove(currMap, Direction.UP)) {
+                newMap = MapUtilis.doMove(currMap, Direction.UP);
+                if (visited.add(newMap.hashCode())) {
+                    bfsList.add(new MapStateNode(newMap, currDepth, cnt));
+                }
             }
             // down
-            if (MapUtilis.checkMove(currMap, posx, posy, 0, -1)) {
-                bfsList.add(new MapStateNode(MapUtilis.doMove(currMap, posx, posy, 0, -1), currDepth, cnt, posx,
-                        posy - 1));
+            if (MapUtilis.checkMove(currMap, Direction.DOWN)) {
+                newMap = MapUtilis.doMove(currMap, Direction.DOWN);
+                if (visited.add(newMap.hashCode())) {
+                    bfsList.add(new MapStateNode(newMap, currDepth, cnt));
+                }
             }
             // left
-            if (MapUtilis.checkMove(currMap, posx, posy, 1, 0)) {
-                bfsList.add(new MapStateNode(MapUtilis.doMove(currMap, posx, posy, 1, 1), currDepth, cnt, posx + 1,
-                        posy));
+            if (MapUtilis.checkMove(currMap, Direction.LEFT)) {
+                newMap = MapUtilis.doMove(currMap, Direction.LEFT);
+                if (visited.add(newMap.hashCode())) {
+                    bfsList.add(new MapStateNode(newMap, currDepth, cnt));
+                }
             }
             // right
-            if (MapUtilis.checkMove(currMap, posx, posy, -1, 0)) {
-                bfsList.add(
-                        new MapStateNode(MapUtilis.doMove(currMap, posx, posy, -1, 0), currDepth, cnt, posx - 1,
-                                posy));
+            if (MapUtilis.checkMove(currMap, Direction.RIGHT)) {
+                newMap = MapUtilis.doMove(currMap, Direction.RIGHT);
+                if (visited.add(newMap.hashCode())) {
+                    bfsList.add(new MapStateNode(newMap, currDepth, cnt));
+                }
             }
 
             cnt++;
         }
 
         throw new AnswerNotFoundException();
-    }
-
-    private boolean check() {
-        boolean flag = true;
-
-        // ignore the walls surrounding
-        for (int i = 1; i < height - 1; i++) {
-            for (int j = 1; j < width - 1; j++) {
-                if (currMap[i][j] == MapComponents.BOX) {
-                    flag = false;
-                }
-            }
-        }
-
-        return flag;
     }
 }
