@@ -4,35 +4,28 @@ import map.MapUtilis;
 import exceptions.AnswerNotFoundException;
 import java.util.ArrayList;
 import model.MapComponents;
+import map.Map;
 
 @SuppressWarnings("FieldMayBeFinal")
 public class AutoSolver {
     private ArrayList<MapStateNode> bfsList;
-    private MapComponents[][] currMap;
-    private int width;
-    private int height, cnt, posx, posy;
+    private Map currMap;
+    private int cnt;
 
-    public AutoSolver(MapComponents[][] map, int playerPosX, int playerPosY) {
+    public AutoSolver(Map map) {
         this.bfsList = new ArrayList<>(64);
 
-        this.height = map.length;
-        this.width = map[0].length;
-        this.cnt = 0;
-        this.posx = playerPosX;
-        this.posy = playerPosY;
-        bfsList.add(new MapStateNode(map, 0, -1, this.posx, this.posy));
+        bfsList.add(new MapStateNode(map, 0, -1));
     }
 
     public ArrayList<MapComponents[][]> solve() throws AnswerNotFoundException {
         MapStateNode currNode;
         int currDepth;
 
-        while (!bfsList.isEmpty()) {
+        while (bfsList.get(cnt)!=null) {
             currNode = bfsList.get(cnt);
             currMap = currNode.getMap();
             currDepth = currNode.getDepth();
-            posx = currNode.getPosx();
-            posy = currNode.getPosy();
 
             // check if the currMap is true
             if (check()) {

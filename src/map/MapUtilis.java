@@ -1,100 +1,159 @@
 package map;
 
 import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Scanner;
+import model.Direction;
 import model.MapComponents;
 
 /**
- * It is a bridge to combine GamePanel(view) and MapMatrix(model) in one game.
+ * It is a tool class to deal with map.
  */
 
 public class MapUtilis {
-    public static boolean checkMove(MapComponents[][] currMap, int posx, int posy, int shiftX, int shiftY){
-        int x=posx+shiftX, y=posy+shiftY;
-        boolean flag=false;
+    /**
+     * This method check if the move can be done.
+     * 
+     * @param map
+     * @param direction
+     * @return
+     */
+    public static boolean checkMove(Map map, Direction direction) {
+        boolean flag = false;
 
-        if(currMap[x][y]==MapComponents.SPACE||currMap[x][y]==MapComponents.TARGET){
-            flag=true;
-        }else if(currMap[x][y]==MapComponents.BOX||currMap[x][y]==MapComponents.BOX_ON_TARGET){
-            if(currMap[x+shiftX][y+shiftY]==MapComponents.SPACE||currMap[x+shiftX][y+shiftY]==MapComponents.TARGET){
-                flag=true;
+        if (MapComponents.isStandable(map.get(direction))) {
+            flag = true;
+        } else if (MapComponents.isPushable(map.get(direction))) {
+            if (MapComponents.isStandable(map.get(direction.getX() * 2, direction.getY() * 2))) {
+                flag = true;
             }
         }
 
         return flag;
     }
 
-    public static MapComponents[][] doMove(MapComponents[][] currMap, int posx, int posy, int shiftX, int shiftY){
-        MapComponents[][] ans= currMap;
-        int x=posx+shiftX,y=posy+shiftY;
+    /**
+     * This warning should only be called when the move could be done!</BR>
+     * Complete the move and return the Map after the move.
+     * @param currMap
+     * @param direction
+     * @return the {@code map} after the move done.
+     */
+    public static Map doMove(Map currMap, Direction direction) {
+        int newX=currMap.getPosX()+direction.getX();
+        int newY=currMap.getPosY()+direction.getY();
 
-        if(currMap[x][y]==MapComponents.BOX){
-            ans[x][y]=MapComponents.SPACE;
-            if(currMap[x+shiftX][y+shiftY]==MapComponents.SPACE){
-                ans[x+shiftX][y+shiftY]=MapComponents.BOX;
+        if (MapComponents.isPushable(currMap.get(direction))){
+            System.out.println("Let's push it!");
+
+            // set the mapComponents
+            MapComponents[][] newMap =currMap.getMap();
+            
+            // push the crate
+            if(currMap.get(direction.getX()*2, direction.getY()*2)==MapComponents.SPACE){
+                // space
+                newMap[newY+direction.getY()][newX+direction.getX()]=MapComponents.BOX;
             }else{
-                ans[x+shiftX][y+shiftY]=MapComponents.BOX_ON_TARGET;
+                // target
+                newMap[newY+direction.getY()][newX+direction.getX()]=MapComponents.BOX_ON_TARGET;
             }
-        }else if(currMap[x][y]==MapComponents.BOX_ON_TARGET){
-            ans[x][y]=MapComponents.TARGET;
-            if(currMap[x+shiftX][y+shiftY]==MapComponents.SPACE){
-                ans[x+shiftX][y+shiftY]=MapComponents.BOX;
+
+            //reset the ground
+            if(currMap.get(direction)==MapComponents.BOX){
+                // space
+                newMap[newY][newX]=MapComponents.SPACE;
             }else{
-                ans[x+shiftX][y+shiftY]=MapComponents.BOX_ON_TARGET;
+                // target
+                newMap[newY][newX]=MapComponents.TARGET;
+            }
+
+            return new Map(newMap,newX,newY);
+        }else{
+            return new Map(currMap.getMap(),newX,newY);
+        }
+    }
+
+    /**
+     * This function is to check if the map has arrived the victory state
+     * 
+     * @param map the map to be checked
+     * @return {@code true} if the player has won
+     */
+    static public boolean checkVictory(Map map) {
+        boolean flag = true;
+
+        for (int y = 1; y < map.getMap().length - 1; y++) {
+            for (int x = 1; x < map.getMap()[0].length - 1; x++) {
+                if (map.getMap()[y][x] == MapComponents.BOX) {
+                    flag = false;
+                }
             }
         }
 
-        return ans;
+        return flag;
     }
 
-    public Map mapReader(int levelNum){
-        String dir="data\\maps\\";
-        String fileName= "level"+levelNum;
-        int width,height,posx,posy;
+    /**
+     * This function is to check if the map has arrived the victory state
+     * 
+     * @param map the array described the map
+     * @return {@code true} if the player has won
+     */
+    static public boolean checkVictory(MapComponents[][] map) {
+        boolean flag = true;
+
+        for (int i = 1; i < map.length - 1; i++) {
+            for (int j = 1; j < map[0].length - 1; j++) {
+                if (map[i][j] == MapComponents.BOX) {
+                    flag = false;
+                }
+            }
+        }
+
+        return flag;
+    }
+
+    /**
+     * This method return a {@code Map} read from data file
+     * @param levelNum
+     * @return
+     */
+    static public Map getMap(int levelNum) {
+        String dir = "data\\maps\\";
+        String fileName = "level" + levelNum;
+        int width, height, posx, posy;
         MapComponents[][] map;
-        Map result=null;
+        Map result;
 
-        try(InputStream inp=new FileInputStream(dir+fileName)){
+        try {
+            InputStream inp = new FileInputStream(dir + fileName);
+            Scanner sc = new Scanner(inp);
+
             // read the size of the map
-            height=read(inp);
-            width=read(inp);
+            height = sc.nextInt();
+            width = sc.nextInt();
 
-            //read the map
-            map=new MapComponents[height][width];
-            for(int i=0;i<height;i++){
-                for(int j=0;j<width;j++){
-                    map[i][j]=MapComponents.valueOf(read(inp));
+            // read the map
+            map = new MapComponents[height][width];
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width; j++) {
+                    map[i][j] = MapComponents.valueOf(sc.nextInt());
                 }
             }
 
             // read the initial pos of the player
-            posy=read(inp);
-            posx=read(inp);
+            posy = sc.nextInt();
+            posx = sc.nextInt();
 
-            result=new Map(width,height,map,posx,posy);
-        }catch(Exception e){
+            result = new Map(map, posx, posy);
+
+            return result;
+        } catch (FileNotFoundException e) {
             System.out.print(e.getMessage());
             System.exit(-1);
         }
 
-        return result;
-    }
-
-    private int read(InputStream inp){
-        int n=0,tmp=0;
-        final int base= (int)'0';
-        try {
-            tmp=inp.read()-base;
-            while(tmp>=0&&tmp<=9){
-                n=tmp+(n<<1)+(n<<3);
-                tmp=inp.read()-base;
-            }
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-            System.exit(-1);
-        }
-
-        return n;
+        return null;
     }
 }

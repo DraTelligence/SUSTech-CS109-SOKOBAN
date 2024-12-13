@@ -1,26 +1,24 @@
 package autosolver;
 
+import map.Map;
 import model.MapComponents;
 
 /**
  * the class represents a node of the bfs tree
  */
-public class MapStateNode{
+public class MapStateNode {
     final int depth;
-    final MapComponents[][] map;
+    final Map map;
     final int father;
-    final int posx,posy;
 
-    public MapStateNode(MapComponents[][] map, int depth, int owner, int posx, int posy){
-        this.map=map;
-        this.depth=depth;
-        this.father=owner;
-        this.posx=posx;
-        this.posy=posy;
+    public MapStateNode(Map map, int depth, int owner) {
+        this.map = map;
+        this.depth = depth;
+        this.father = owner;
     }
 
-    public MapComponents[][] getMap() {
-        return map;
+    public Map getMap() {
+        return this.map;
     }
 
     public int getDepth() {
@@ -29,13 +27,4 @@ public class MapStateNode{
 
     public int getFather() {
         return father;
-    }
-
-    public int getPosx() {
-        return posx;
-    }
-
-    public int getPosy() {
-        return posy;
-    }
 }
