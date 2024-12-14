@@ -68,6 +68,7 @@ public class Test {
 
                 System.out.println("------------");
             });
+            
 
             container.add(bt, JLayeredPane.DEFAULT_LAYER, 1);
             container.add(panel2, JLayeredPane.DEFAULT_LAYER, 3);

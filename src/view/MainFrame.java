@@ -34,7 +34,7 @@ public class MainFrame extends JFrame {
         this.setSize(size);
         this.setLocationRelativeTo(null);
 
-        GameMainPanel gameMainPanel = new GameMainPanel(size, layout);
+        GameMainPanel gameMainPanel = new GameMainPanel(layout);
         LevelSelectMenuPanel levelSelectMenuPanel = new LevelSelectMenuPanel(layout);
         UserSystemPanel userSystemPanel = new UserSystemPanel(layout);
         MainMenuPanel mainMenuPanel = new MainMenuPanel(layout);
