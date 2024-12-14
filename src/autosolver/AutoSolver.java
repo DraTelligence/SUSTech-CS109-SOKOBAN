@@ -3,6 +3,7 @@ package autosolver;
 import exceptions.AnswerNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.concurrent.Callable;
 import map.Map;
 import map.MapUtilis;
 import model.Direction;
@@ -19,7 +20,8 @@ public class AutoSolver {
         bfsList.add(new MapStateNode(map, 0, -1));
     }
 
-    public ArrayList<MapComponents[][]> solve() throws AnswerNotFoundException {
+    public ArrayList<MapComponents[][]> solve(Callable<ArrayList<MapComponents[][]>> callback) throws AnswerNotFoundException {
+        final Direction[] DIRECTIONS= {Direction.UP,Direction.DOWN,Direction.LEFT,Direction.RIGHT};
         MapStateNode currNode;
         int currDepth;
         int cnt = 0;
@@ -45,33 +47,12 @@ public class AutoSolver {
             }
 
             // add new nodes to the queue
-            // values() may use too much storage
-            // up
-            if (MapUtilis.checkMove(currMap, Direction.UP)) {
-                newMap = MapUtilis.doMove(currMap, Direction.UP);
-                if (visited.add(newMap.hashCode())) {
-                    bfsList.add(new MapStateNode(newMap, currDepth, cnt));
-                }
-            }
-            // down
-            if (MapUtilis.checkMove(currMap, Direction.DOWN)) {
-                newMap = MapUtilis.doMove(currMap, Direction.DOWN);
-                if (visited.add(newMap.hashCode())) {
-                    bfsList.add(new MapStateNode(newMap, currDepth, cnt));
-                }
-            }
-            // left
-            if (MapUtilis.checkMove(currMap, Direction.LEFT)) {
-                newMap = MapUtilis.doMove(currMap, Direction.LEFT);
-                if (visited.add(newMap.hashCode())) {
-                    bfsList.add(new MapStateNode(newMap, currDepth, cnt));
-                }
-            }
-            // right
-            if (MapUtilis.checkMove(currMap, Direction.RIGHT)) {
-                newMap = MapUtilis.doMove(currMap, Direction.RIGHT);
-                if (visited.add(newMap.hashCode())) {
-                    bfsList.add(new MapStateNode(newMap, currDepth, cnt));
+            for(Direction dir: DIRECTIONS){
+                if (MapUtilis.checkMove(currMap, dir)) {
+                    newMap = MapUtilis.doMove(currMap, dir);
+                    if (visited.add(newMap.hashCode())) {
+                        bfsList.add(new MapStateNode(newMap, currDepth, cnt));
+                    }
                 }
             }
 
