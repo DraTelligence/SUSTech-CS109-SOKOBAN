@@ -10,6 +10,7 @@ import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import model.MapMatrix;
 
 //管理user的工具类
 public class UserSystem {
@@ -18,7 +19,7 @@ public class UserSystem {
     /**
      * Produce the path of saves
      * C://...//%user%//AppData//Roaming//ThereIsA_Studio//Sokoban//saves
-     * 
+     *
      * @return The path of the dir where saves are stored
      */
     private static Path getSavePath() {
@@ -48,7 +49,7 @@ public class UserSystem {
 
     /**
      * To sign up for the user
-     * 
+     *
      * @param userName
      * @param pswd
      * @throws UserAlreadyExistsException
@@ -93,7 +94,7 @@ public class UserSystem {
 
     /**
      * To log the user in, throws a exception if encounters any problem.
-     * 
+     *
      * @param userName
      * @param pswd
      * @throws PswdIncorrectException
@@ -148,7 +149,7 @@ public class UserSystem {
 
     /**
      * Get the current user's user ID
-     * 
+     *
      * @author 秦嘉曜
      * @return the id of the current user. If in guest mode, return -1
      */
@@ -163,5 +164,5 @@ public class UserSystem {
      */
     public void updateSave(final MapMatrix MM){
         this.currentUser.updateSave(MM);
-    } 
+    }
 }

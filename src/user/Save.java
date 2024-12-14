@@ -1,6 +1,7 @@
 package user;
 
 import java.io.Serializable;
+import model.MapMatrix;
 
 /**
  * save类型对象将包含关卡的完成情况与当前所在关卡的相关数据
@@ -12,6 +13,11 @@ public class Save implements Serializable{
      * the number of the stages
      */
     final static private int STAGE_NUM=4;
+
+    /**
+     * the map of the current stage
+     */
+    private MapMatrix currentStage;
 
     /**
      * the completed or not situation of each stage

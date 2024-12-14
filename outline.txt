@@ -1,0 +1,35 @@
+part1:user system
+    ——储存用户信息
+        存档
+            基础要求：手动存档
+            附加要求：自动存档
+            基础要求：坏档检测，处理error
+            附加要求：检测存档篡改
+        用户名和密码
+            访客登录
+            创建新账户
+            管理账户
+
+    ——具体类实现
+        user类，储存用户信息
+            构造函数
+            成员
+            方法
+        userSystem类，处理user类的
+            和interface的接口
+            1.读取用户信息
+            2.创建用户
+            *3.管理现有用户
+    
+
+#1
+SID:000000
+userName:
+pswd:
+save:
+
+
+
+part2:gameplay
+
+part3:interace

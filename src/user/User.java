@@ -3,6 +3,7 @@ package user;
 import exceptions.PswdIncorrectException;
 import java.io.Serial;
 import java.io.Serializable;
+import model.MapMatrix;
 
 //储存用户信息，提供从读取存档文件创建user
 public class User implements Serializable{
@@ -16,7 +17,7 @@ public class User implements Serializable{
 
     /**
      * to see if the pswd is correct or not
-     * 
+     *
      * @param pswd give a pswd to try
      * @return true if the password is correct
      */
@@ -26,7 +27,7 @@ public class User implements Serializable{
 
     /**
      * the constructor of User
-     * @author 
+     * @author
      * @param userName the name of the user
      * @param pswd the passwoed of the account
      */
