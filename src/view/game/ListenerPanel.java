@@ -1,9 +1,12 @@
 package view.game;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import javax.swing.*;
 
+/**
+ * This class is only to enable key events.
+ */
 public abstract class ListenerPanel extends JPanel {
     public ListenerPanel() {
         enableEvents(AWTEvent.KEY_EVENT_MASK);
@@ -28,4 +31,5 @@ public abstract class ListenerPanel extends JPanel {
     public abstract void doMoveLeft();
     public abstract void doMoveUp();
     public abstract void doMoveDown();
+
 }
