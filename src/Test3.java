@@ -28,7 +28,7 @@ public class Test3 {
         p2.setBackground(Color.RED);
 
         //mainPane.add(p2,0);
-        mainPane.add(p1,0);
+        mainPane.add(p1,1);
         
 
         f.setVisible(true);

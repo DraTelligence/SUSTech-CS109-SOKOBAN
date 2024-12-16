@@ -1,30 +1,44 @@
 package view.game;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import javax.swing.JPanel;
-import javax.swing.border.Border;
+import javax.swing.JLayeredPane;
+import view.game.informationPanel.InformationPanelBody;
+import view.game.informationPanel.StepCountPanel;
+import view.game.informationPanel.TimePanel;
 
-public class InformationPanel extends JPanel {
+public class InformationPanel extends JLayeredPane {
+    final private StepCountPanel step;
+    final private TimePanel time;
+    final private InformationPanelBody body;
+
     public InformationPanel() {
-        
+        this.setBounds(0,0,555,785);
+
+        this.step = new StepCountPanel();
+        this.time = new TimePanel();
+        this.body = new InformationPanelBody();
+
+        this.add(this.body,0);
+        this.add(this.step,0);
+        this.add(this.time,0);
     }
-    
 
-    @Override
-    public void paintComponent(Graphics panel){
-        Graphics2D g2d= (Graphics2D)panel.create();
+    public void updateStep(int step) {
+        this.step.updateStep(step);
+    }
 
-        //paint a inner shadow
-        int shadowWidth=10;
-        int shift=0,opacity=40;
-        for(;shift<=shadowWidth;){
-            g2d.setColor;
-            g2d.drawRoundRect(opacity, opacity, shadowWidth, shift, shadowWidth, opacity);;
-        }
-        
-        // paint a round-corner rectangle
-        g2d.fillRoundRect(0, -20, 555, 185, 70, 30);
-        
+    public void pause() {
+        this.time.pauseTiming();
+    }
+
+    public void continueTiming() {
+        this.time.continueTiming();
+    }
+
+    /**
+     * reset both panels
+     */
+    public void reset() {
+        this.time.reset();
+        this.step.reset();
     }
 }
