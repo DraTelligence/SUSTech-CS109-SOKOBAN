@@ -26,13 +26,14 @@ public class MainFrame extends JFrame {
     public MainFrame() {
         super("SOKOBAN");
 
-        Dimension size=new Dimension(900,600);
+        Dimension size=new Dimension(555,785);
 
         CardLayout layout = new CardLayout();
         this.setLayout(layout);
 
         this.setSize(size);
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
 
         GameMainPanel gameMainPanel = new GameMainPanel(layout);
         LevelSelectMenuPanel levelSelectMenuPanel = new LevelSelectMenuPanel(layout);

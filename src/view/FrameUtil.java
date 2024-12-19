@@ -32,12 +32,4 @@ public class FrameUtil {
         return jTextField;
     }
 
-    public static JButton createButton(JFrame frame, String name, Point location, int width, int height) {
-        JButton button = new JButton(name);
-        button.setLocation(location);
-        button.setSize(width, height);
-        frame.add(button);
-        return button;
-    }
-
 }

@@ -1,13 +1,17 @@
 package map;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Arrays;
 import model.Direction;
 import model.MapComponents;
 import view.game.mapPnaleComp.StaticMapComponent;
 
 @SuppressWarnings("FieldMayBeFinal")
-public class Map {
+public class Map implements Serializable{
+    @Serial
     final private MapComponents[][] map;
+    @Serial
     private int posX, posY;
     static final int PRIME_FOR_HASHCODE = 31;
 
