@@ -1,6 +1,7 @@
 package view.game;
 
 import javax.swing.JLayeredPane;
+
 import view.game.informationPanel.InformationPanelBody;
 import view.game.informationPanel.StepCountPanel;
 import view.game.informationPanel.TimePanel;
@@ -37,7 +38,7 @@ public class InformationPanel extends JLayeredPane {
     /**
      * reset both panels
      */
-    public void reset() {
+    public void initPanel() {
         this.time.reset();
         this.step.reset();
     }

@@ -16,9 +16,6 @@ import controller.AppController;
  * contains four different panels.
  */
 public class MainFrame extends JFrame {
-    private static final int WIDTH = 555;
-    private static final int HEIGHT = 785; 
-
     private final CardLayout layout = new CardLayout();  
     private final JPanel cardPanel = new JPanel(layout);
     private final AppController appControllor = AppController.getInstance(layout,cardPanel);
@@ -28,7 +25,7 @@ public class MainFrame extends JFrame {
 
         // initialize the frame
         this.setLayout(null);
-        this.setSize(new Dimension(WIDTH, HEIGHT));
+        this.setSize(new Dimension(555, 785));
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setMaximizedBounds(getBounds());

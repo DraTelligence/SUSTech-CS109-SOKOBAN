@@ -15,5 +15,7 @@ public class ButtonRight extends AreaButton {
 
         Area buttonArea = new Area(new RoundRectangle2D.Double(353, 619, 78, 108, 10, 10));
         this.setButtonArea(buttonArea);
+
+        this.setKeyCode(java.awt.event.KeyEvent.VK_RIGHT);
     }
 }

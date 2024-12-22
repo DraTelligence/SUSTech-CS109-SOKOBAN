@@ -1,6 +1,5 @@
-package user;
+package model.user;
 
-import exceptions.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -10,7 +9,11 @@ import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import map.Map;
+
+import model.exceptions.PswdIncorrectException;
+import model.exceptions.UserAlreadyExistsException;
+import model.exceptions.UserNotFoundException;
+import model.game.Map;
 
 /**
  * This class produces the accesse to manage users. Users should only be visited via this class's methods.
@@ -153,5 +156,9 @@ public class UserSystem {
      */
     public void updateSave(Map map) {
         this.currentUser.updateSave(map);
+    }
+
+    public boolean checkLoggedIn(){
+        return this.currentUser==null;
     }
 }

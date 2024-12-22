@@ -1,8 +1,8 @@
-package user;
+package model.user;
 
 import java.io.Serial;
 import java.io.Serializable;
-import map.Map;
+import model.game.Map;
 
 /**
  * save类型对象将包含关卡的完成情况与当前所在关卡的相关数据

@@ -2,17 +2,16 @@ package model.game.autosolver;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.SwingWorker;
 
-import exceptions.AnswerNotFoundException;
+import model.game.AnswerNotFoundException;
 import model.game.Direction;
 import model.game.Map;
-import model.game.MapComponents;
 
 @SuppressWarnings("FieldMayBeFinal")
-public class AutoSolver extends SwingWorker<ArrayList<Direction>, Void> {
+public class AutoSolver extends SwingWorker<ArrayList<Map>, Void> {
     final static private Direction[] DIRECTIONS = { Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT };
     private ArrayList<MapStateNode> bfsList;
     private Map currMap;
@@ -22,15 +21,13 @@ public class AutoSolver extends SwingWorker<ArrayList<Direction>, Void> {
         bfsList.add(new MapStateNode(map, 0, -1));
     }
 
-    public void solve() throws AnswerNotFoundException {
+    private ArrayList<Map> solve() throws AnswerNotFoundException {
         MapStateNode currNode;
-        int currDepth;
         int cnt = 0;
 
         while (bfsList.get(cnt) != null) {
             currNode = bfsList.get(cnt);
             currMap = currNode.getMap();
-            currDepth = currNode.getDepth();
             HashSet<Integer> visited = new HashSet<>();
             Map newMap;
 
@@ -38,13 +35,13 @@ public class AutoSolver extends SwingWorker<ArrayList<Direction>, Void> {
             if (Map.checkVictory(currMap)) {
                 int totSteps = bfsList.get(cnt).getDepth() + 1;
 
-                ArrayList<MapComponents[][]> ansList = new ArrayList<>(totSteps);
+                ArrayList<Map> ansList = new ArrayList<>(totSteps);
 
-                for (int next = cnt; next != 0; next = bfsList.get(next).getFather()) {
-                    ansList.set(bfsList.get(next).getDepth(), bfsList.get(next).getMap().getMapComponentsMatrix());
+                for (int next = cnt; next != -1; next = bfsList.get(next).getFather()) {
+                    ansList.set(bfsList.get(next).getDepth(), bfsList.get(next).getMap());
                 }
 
-                return;
+                return ansList;
             }
 
             // add new nodes to the queue
@@ -52,7 +49,7 @@ public class AutoSolver extends SwingWorker<ArrayList<Direction>, Void> {
                 if (Map.checkMove(currMap, dir)) {
                     newMap = Map.doMove(currMap, dir);
                     if (visited.add(newMap.hashCode())) {
-                        bfsList.add(new MapStateNode(newMap, currDepth, cnt));
+                        bfsList.add(new MapStateNode(newMap, currNode.getDepth()+1, cnt));
                     }
                 }
             }
@@ -64,20 +61,20 @@ public class AutoSolver extends SwingWorker<ArrayList<Direction>, Void> {
     }
     
     @Override
-    protected ArrayList<Direction> doInBackground() throws Exception {
+    protected ArrayList<Map> doInBackground() throws Exception {
         try{
-            solve();
+            return solve();
         } catch (AnswerNotFoundException e) {
-            e.printStackTrace();
+            return null;
         }
     }
 
     @Override
     protected void done() {
         try {
-            get();
-        } catch (Exception e) {
-            e.printStackTrace();
+            Map.produceHint(get());
+        } catch (InterruptedException|ExecutionException e) {
+            System.out.println("Error in AutoSolver: "+e.getMessage());
         }
     }
 }

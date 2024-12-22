@@ -1,4 +1,4 @@
-package exceptions;
+package model.exceptions;
 
 public class UserAlreadyExistsException extends java.lang.Exception{
     @Override 

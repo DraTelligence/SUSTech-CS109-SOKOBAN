@@ -15,5 +15,7 @@ public class ButtonUp extends AreaButton {
 
         Area buttonArea = new Area(new RoundRectangle2D.Double(210,619,135,50,10,10));
         this.setButtonArea(buttonArea);
+
+        this.setKeyCode(java.awt.event.KeyEvent.VK_UP);
     }
 }

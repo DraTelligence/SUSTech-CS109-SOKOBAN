@@ -11,13 +11,20 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.Scanner;
+import java.util.Stack;
 
+import controller.GameController;
+import model.game.autosolver.AutoSolver;
 import view.game.mapPnaleComp.StaticMapComponent;
 
 /**
- * The Map class represents the map of the game. It contains a matrix of mapComponents.
+ * The Map class represents the map of the game. It contains a matrix of
+ * mapComponents.
  */
 
 @SuppressWarnings("FieldMayBeFinal")
@@ -26,19 +33,70 @@ public class Map implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Serial
-    final private MapComponents[][] map;
+    private MapComponents[][] map;
+
     @Serial
     private int posX, posY;
+
+    transient private Stack<Map> record;
+    static transient private boolean hintReady = false;
+    static transient private Deque<Map> hints = new ArrayDeque<>();
     static final int PRIME_FOR_HASHCODE = 31;
 
-    public Map(MapComponents[][] map, int posx, int posy) {
+    public Map() {
+        this.record = new Stack<>();
+    }
+
+    private Map(MapComponents[][] map, int posx, int posy) {
         this.map = map;
         this.posX = posx;
         this.posY = posy;
     }
 
+    public void initMap(int levelNum) {
+        readMapFromFile(levelNum);
+    }
+
+    /**
+     * This method return a {@code Map} read from data file
+     * 
+     * @param levelNum
+     * @return
+     */
+    private void readMapFromFile(int levelNum) {
+        String dir = "data\\maps\\";
+        String fileName = "level" + levelNum;
+        int width, height;
+
+        try {
+            InputStream inp = new FileInputStream(dir + fileName);
+            // read the size of the map
+            try (Scanner sc = new Scanner(inp)) {
+                // read the size of the map
+                height = sc.nextInt();
+                width = sc.nextInt();
+
+                // read the map
+                this.map = new MapComponents[height][width];
+                for (int i = 0; i < height; i++) {
+                    for (int j = 0; j < width; j++) {
+                        this.map[i][j] = MapComponents.valueOf(sc.nextInt());
+                    }
+                }
+
+                // read the initial pos of the player
+                this.posY = sc.nextInt();
+                this.posX = sc.nextInt();
+            }
+        } catch (FileNotFoundException e) {
+            System.out.print(e.getMessage());
+            System.exit(-1);
+        }
+    }
+
     // Serialize the object and include a hash of the data
-    public void serializeWithHash(String filename, ObjectOutputStream oos) throws NoSuchAlgorithmException, IOException {
+    public void serializeWithHash(String filename, ObjectOutputStream oos)
+            throws NoSuchAlgorithmException, IOException {
         // Serialize the object
         oos.writeObject(this);
 
@@ -123,7 +181,7 @@ public class Map implements Serializable {
      * @param offY the offset in the Y direction
      * @return the map component at the specified offset
      */
-    public MapComponents get(int offX, int offY) {
+    private MapComponents get(int offX, int offY) {
         if (isValidPosition(this.posY + offY, this.posX + offX)) {
             return this.map[this.posY + offY][this.posX + offX];
         }
@@ -137,7 +195,7 @@ public class Map implements Serializable {
      * @param direction the direction to move
      * @return the map component in the specified direction
      */
-    public MapComponents get(Direction direction) {
+    private MapComponents get(Direction direction) {
         int newRow = this.posY + direction.getRow();
         int newCol = this.posX + direction.getCol();
         if (isValidPosition(newRow, newCol)) {
@@ -239,7 +297,7 @@ public class Map implements Serializable {
     }
 
     /**
-     * Complete the move and return the Map after the move. 
+     * Complete the move and return the Map after the move.
      * Warning: This method should only be called when the move could be done
      * 
      * @param currMap
@@ -283,6 +341,70 @@ public class Map implements Serializable {
         }
     }
 
+    public void doMove(Direction direction) {
+        if (checkMove(this, direction)) {
+            hintReady = false;
+            this.record.push(this);
+            Map newMap = doMove(this, direction);
+
+            this.map = newMap.getMapComponentsMatrix();
+            this.posX = newMap.getPlayerPosX();
+            this.posY = newMap.getPlayerPosY();
+
+            GameController.getInstance().updateView(direction, "move");
+        } else {
+            GameController.getInstance().updateView(direction, "fail");
+        }
+    }
+
+    /**
+     * this version of doMove is used by the showHint method
+     */
+    private void doMove(Map nextMap) {
+        this.map = nextMap.getMapComponentsMatrix();
+        this.posX = nextMap.getPlayerPosX();
+        this.posY = nextMap.getPlayerPosY();
+        GameController.getInstance().updateView(getNextStep(this, nextMap), "move");
+    }
+
+    public void undoMove() {
+        if (!this.record.isEmpty()) {
+            Map lastMap = this.record.pop();
+            this.map = lastMap.getMapComponentsMatrix();
+            this.posX = lastMap.getPlayerPosX();
+            this.posY = lastMap.getPlayerPosY();
+            GameController.getInstance().updateView(null, "rewind");
+        }
+    }
+
+    static public void produceHint(ArrayList<Map> hint) {
+        hintReady = true;
+
+        if (hint == null) {
+            System.out.println("No solution found");
+        } else {
+            for (int i = hint.size() - 1; i > 0; i--) {
+                hints.push(hint.get(i));
+            }
+        }
+
+        GameController.getInstance().showLoadingDone();
+    }
+
+    /**
+     * GameController will call this method to show the next hint step. If the hint
+     * isn't ready yet, the method will call AutoSolver to produce hints. Otherwise,
+     * it will show the next hint.
+     */
+    public void showHint() {
+        if (!hintReady) {
+            new AutoSolver(this).execute();
+            GameController.getInstance().showLoading();
+        } else {
+            this.doMove(hints.pop());
+        }
+    }
+
     /**
      * This function is to check if the map has arrived the victory state
      *
@@ -303,48 +425,9 @@ public class Map implements Serializable {
         return flag;
     }
 
-    /**
-     * This method return a {@code Map} read from data file
-     * 
-     * @param levelNum
-     * @return
-     */
-    static public Map getMap(int levelNum) {
-        String dir = "data\\maps\\";
-        String fileName = "level" + levelNum;
-        int width, height, posx, posy;
-        MapComponents[][] map;
-        Map result;
+    static public Direction getNextStep(Map preMap, Map postMap) {
+        int dx=postMap.getPlayerPosX()-preMap.getPlayerPosX();int dy=postMap.getPlayerPosY()-preMap.getPlayerPosY();
 
-        try {
-            InputStream inp = new FileInputStream(dir + fileName);
-            // read the size of the map
-            try (Scanner sc = new Scanner(inp)) {
-                // read the size of the map
-                height = sc.nextInt();
-                width = sc.nextInt();
-                
-                // read the map
-                map = new MapComponents[height][width];
-                for (int i = 0; i < height; i++) {
-                    for (int j = 0; j < width; j++) {
-                        map[i][j] = MapComponents.valueOf(sc.nextInt());
-                    }
-                }
-                
-                // read the initial pos of the player
-                posy = sc.nextInt();
-                posx = sc.nextInt();
-                
-                result = new Map(map, posx, posy);
-            }
-
-            return result;
-        } catch (FileNotFoundException e) {
-            System.out.print(e.getMessage());
-            System.exit(-1);
-        }
-
-        return null;
+        return switch(dx){case-1->Direction.LEFT;case 1->Direction.RIGHT;default->switch(dy){case-1->Direction.UP;case 1->Direction.DOWN;default->null;};};
     }
 }

@@ -1,9 +1,11 @@
 package view.game.mapPnaleComp;
 
 import java.awt.Image;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import model.MapComponents;
+
+import model.game.MapComponents;
 
 @SuppressWarnings("FieldMayBeFinal")
 public class StaticMapComponent extends JLabel {

@@ -3,11 +3,13 @@ package controller;
 import javax.swing.JPanel;
 
 import view.panels.UserSystemPanel;
+import model.user.UserSystem;
 
 public class UserSystemController {
     private static UserSystemController instance;
 
-    private final UserSystemPanel view = new UserSystemPanel();
+    private static final UserSystemPanel view = new UserSystemPanel();
+    private final UserSystem model = new UserSystem();
 
     private UserSystemController() {
         

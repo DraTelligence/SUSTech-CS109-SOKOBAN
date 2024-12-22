@@ -11,12 +11,16 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
-import controller.GameController;
-import model.Direction;
-import model.MapComponents;
-import view.game.mapPnaleComp.*;
+
+import model.game.Direction;
+import model.game.Map;
+import model.game.MapComponents;
+import view.game.mapPnaleComp.Crate;
+import view.game.mapPnaleComp.OutOfMapWalls;
+import view.game.mapPnaleComp.Player;
 
 public class MapPanel extends JLayeredPane {
     private static final int MAX_COL = 11;
@@ -28,25 +32,28 @@ public class MapPanel extends JLayeredPane {
     private final DynamicLayer dynamicLayer;
     private final StaticLayer staticLayer;
 
-    private final int col, row, startCol, startRow;
-    private final Map map;
+    private int col, row, startCol, startRow;
 
-    public MapPanel(Map map) {
+    public MapPanel() {
         this.setLocation(BASE_POINT);
         this.setSize(new Dimension(585, 495));
         this.setOpaque(false);
-
-        this.map = map;
-        this.col = map.getWidth();
-        this.row = map.getHeight();
-        this.startCol = (MAX_COL - col) / 2;
-        this.startRow = (MAX_ROW - row) / 2;
 
         staticLayer = new StaticLayer();
         dynamicLayer = new DynamicLayer();
 
         this.add(staticLayer, 1);
         this.add(dynamicLayer, 0);
+    }
+
+    public void initPanel(Map map){
+        this.col = map.getWidth();
+        this.row = map.getHeight();
+        this.startCol = (MAX_COL - col) / 2;
+        this.startRow = (MAX_ROW - row) / 2;
+
+        dynamicLayer.initLayer(map);
+        staticLayer.initLayer(map);
     }
 
     /**
@@ -57,8 +64,12 @@ public class MapPanel extends JLayeredPane {
             this.setLocation(BASE_POINT);
             this.setSize(new Dimension(585, 495));
             this.setBackground(new Color(0,0,0,100));
-
             this.setLayout(new GridBagLayout());
+        }
+    
+        public void initLayer(Map map){
+            this.removeAll();
+            
             var layoutConstraints = new GridBagConstraints();
 
             // init out of map comps
@@ -97,6 +108,9 @@ public class MapPanel extends JLayeredPane {
             layoutConstraints.gridwidth = col;
             layoutConstraints.gridheight = row;
             this.add(mainMap, layoutConstraints);
+
+            this.revalidate();
+            this.repaint();
         }
     }
 
@@ -104,7 +118,7 @@ public class MapPanel extends JLayeredPane {
      * this layer is to show dynamic elements: player, boxes, etc.
      */
     private class DynamicLayer extends JPanel {
-        Player player = new Player(1+map.getPosY()+startCol, 1+map.getPosY()+startRow);
+        Player player;
         ArrayList<Crate> crates;
 
         public DynamicLayer() {
@@ -112,6 +126,13 @@ public class MapPanel extends JLayeredPane {
             this.setSize(new Dimension(585, 495));
             this.setLayout(null);
             this.setOpaque(false);
+        }
+
+        public void initLayer(Map map){
+            this.removeAll();
+            crates.clear();
+
+            player=new Player(1+map.getPlayerPosX()+startCol, 1+map.getPlayerPosX()+startRow);
             crates=new ArrayList<>();
 
             this.add(player);
@@ -126,6 +147,9 @@ public class MapPanel extends JLayeredPane {
             for(var crate: crates){
                 this.add(crate);
             }
+
+            this.revalidate();
+            this.repaint();
         }
 
         protected void doMove(Direction dir){
@@ -190,9 +214,5 @@ public class MapPanel extends JLayeredPane {
 
     public void doMoveFail(Direction dir){
         dynamicLayer.move_failed(dir);
-    }
-
-    public void ActiveRepaint(){
-        this.dynamicLayer.repaint();
     }
 }

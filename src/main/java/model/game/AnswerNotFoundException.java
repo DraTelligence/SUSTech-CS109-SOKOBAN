@@ -1,4 +1,4 @@
-package exceptions;
+package model.game;
 
 public class AnswerNotFoundException extends Exception {
     // 默认构造函数

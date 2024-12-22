@@ -8,6 +8,7 @@ import java.awt.Shape;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+
 import javax.swing.JComponent;
 
 /**
@@ -27,8 +28,6 @@ public class Focus extends JComponent {
    }
 
    public Focus(JComponent owner, int posx, int posy, int beginR, int endR, int duration, int DELAY) {
-       super(DELAY,duration);
-
        this.width = owner.getWidth();
        this.height = owner.getHeight();
 
@@ -48,7 +47,7 @@ public class Focus extends JComponent {
     * to control the motion pattern of the component
     */
    private double getSpeed(long time) {
-       return 1 - Math.pow(1 - ((double) time / super.getDuration()), 3);
+    return 0;
    }
 
    @Override

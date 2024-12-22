@@ -21,5 +21,8 @@ public class ButtonRewind extends AreaButton {
         buttonArea.add(new Area(new Ellipse2D.Double(22, 619, 85, 100)));
 
         this.setButtonArea(buttonArea);
+
+        this.setKeyModifier(java.awt.event.InputEvent.CTRL_DOWN_MASK);
+        this.setKeyCode(java.awt.event.KeyEvent.VK_Z);
     }
 }

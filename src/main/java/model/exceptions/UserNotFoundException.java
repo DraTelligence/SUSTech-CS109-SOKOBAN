@@ -1,4 +1,4 @@
-package exceptions;
+package model.exceptions;
 
 public class UserNotFoundException extends java.lang.Exception {
     @Override

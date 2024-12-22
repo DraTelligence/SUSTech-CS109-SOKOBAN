@@ -1,8 +1,18 @@
 package view.game;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+
 import javax.swing.JLayeredPane;
-import view.game.buttonPanel.*;
+
+import view.game.buttonPanel.AreaButton;
+import view.game.buttonPanel.ButtonDown;
+import view.game.buttonPanel.ButtonHint;
+import view.game.buttonPanel.ButtonLeft;
+import view.game.buttonPanel.ButtonPanelBody;
+import view.game.buttonPanel.ButtonRewind;
+import view.game.buttonPanel.ButtonRight;
+import view.game.buttonPanel.ButtonUp;
 
 
 public class ButtonPanel extends JLayeredPane{
@@ -31,5 +41,11 @@ public class ButtonPanel extends JLayeredPane{
 
     public ArrayList<AreaButton> getButtons() {
         return buttons;
+    }
+
+    public void handleKeyEvent(KeyEvent e){
+        for(var bt: buttons){
+            bt.handleKeyEvent(e);
+        }
     }
 }

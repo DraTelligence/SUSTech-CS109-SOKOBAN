@@ -1,10 +1,8 @@
 package controller;
 
-import javax.swing.JPanel;
-
-import model.Direction;
+import model.game.Direction;
+import model.game.Map;
 import view.panels.GameMainPanel;
-import model.game.*;
 
 /**
  * It is a bridge to combine GamePanel(view) and MapMatrix(model) in one game.
@@ -28,39 +26,51 @@ public class GameController {
         return instance;
     }
 
-    public void handleCommand(String command) {}
-
-    public JPanel getView() {
+    public GameMainPanel getView() {
         return view;
+    }
+
+    /**
+     * The AppController will call this method to initialize the game, show the game panel.
+     * @param levelNum
+     */
+    public void initGame(int levelNum) {
+        this.model.initMap(levelNum);
+        this.view.initPanel(this.model);
+    }
+
+    public void handleCommand(String command) {
+        switch(command) {
+            case "moveLeft" -> this.model.doMove(Direction.LEFT);
+            case "moveDown" -> this.model.doMove(Direction.DOWN);
+            case "moveRight" -> this.model.doMove(Direction.RIGHT);
+            case "moveUp" -> this.model.doMove(Direction.UP);
+            case "getHint" -> this.model.showHint();
+            case "doRewind" -> this.model.undoMove();
+        }
+    }
+
+    /**
+     * the model will call this method to inform the view to perform loading.
+     */
+    public void showLoading(){
+        view.showLoading();
+    }
+
+    public void showLoadingDone(){
+        view.showLoadingDone();
     }
 
     public void restartGame() {
         System.out.println("Do restart game here");
     }
 
-    public boolean doMove(int row, int col, Direction direction) {
-        GridComponent currentGrid = view.getGridComponent(row, col);
-        //target row can column.
-        int tRow = row + direction.getRow();
-        int tCol = col + direction.getCol();
-        GridComponent targetGrid = view.getGridComponent(tRow, tCol);
-        int[][] map = model.getMatrix();
-        if (map[tRow][tCol] == 0 || map[tRow][tCol] == 2) {
-            //update hero in MapMatrix
-            model.getMatrix()[row][col] -= 20;
-            model.getMatrix()[tRow][tCol] += 20;
-            //Update hero in GamePanel
-            Hero h = currentGrid.removeHeroFromGrid();
-            targetGrid.setHeroInGrid(h);
-            //Update the row and column attribute in hero
-            h.setRow(tRow);
-            h.setCol(tCol);
-            return true;
+    public void updateView(Direction direction, String command) {
+        switch(command){
+            case "move" -> view.doMove(direction);
+            case "fail" -> view.doMoveFail(direction);
+            case "rewind" -> view.doRewind();
         }
-        return false;
     }
-
-    //todo: add other methods such as loadGame, saveGame...
-
 }
 

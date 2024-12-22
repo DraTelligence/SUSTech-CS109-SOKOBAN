@@ -1,5 +1,6 @@
 package view.game.buttonPanel;
 
+import static java.awt.event.KeyEvent.VK_DOWN;
 import java.awt.geom.Area;
 import java.awt.geom.RoundRectangle2D;
 
@@ -12,5 +13,7 @@ public class ButtonDown extends AreaButton {
 
         Area buttonArea = new Area(new RoundRectangle2D.Double(210,678,135,50,10,10));
         this.setButtonArea(buttonArea);
+
+        this.setKeyCode(VK_DOWN);
     }
 }

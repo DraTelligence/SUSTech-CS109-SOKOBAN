@@ -12,5 +12,7 @@ public class ButtonLeft extends AreaButton {
 
         Area buttonArea = new Area(new RoundRectangle2D.Double(124,619,78,108,10,10));
         this.setButtonArea(buttonArea);
+
+        this.setKeyCode(java.awt.event.KeyEvent.VK_LEFT);
     }
 }

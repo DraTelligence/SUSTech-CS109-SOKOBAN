@@ -2,10 +2,12 @@ package view.game.mapPnaleComp;
 
 import java.awt.Image;
 import java.util.Stack;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.Timer;
-import model.Direction;
+
+import model.game.Direction;
 
 public class Player extends JLabel {
     private static enum Direc {

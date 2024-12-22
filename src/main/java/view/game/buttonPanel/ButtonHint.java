@@ -18,6 +18,9 @@ public class ButtonHint extends AreaButton{
         buttonArea.add(new Area(new RoundRectangle2D.Double(448,619,43,50,8,8)));
         buttonArea.add(new Area(new Ellipse2D.Double(448, 619, 85, 100)));
 
+        this.setKeyCode(java.awt.event.KeyEvent.VK_H);
+        this.setKeyModifier(java.awt.event.InputEvent.CTRL_DOWN_MASK);
+
         this.setButtonArea(buttonArea);
     }
 }

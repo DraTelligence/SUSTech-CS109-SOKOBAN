@@ -1,9 +1,9 @@
-package user;
+package model.user;
 
-import exceptions.PswdIncorrectException;
+import model.exceptions.PswdIncorrectException;
 import java.io.Serial;
 import java.io.Serializable;
-import map.Map;
+import model.game.Map;
 
 //储存用户信息，提供从读取存档文件创建user
 public class User implements Serializable {

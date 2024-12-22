@@ -1,4 +1,4 @@
-package exceptions;
+package model.exceptions;
 
 public class PswdIncorrectException extends java.lang.Exception{
     @Override
