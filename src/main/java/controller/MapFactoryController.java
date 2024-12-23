@@ -2,6 +2,8 @@ package controller;
 
 import javax.swing.JPanel;
 
+import view.panels.MapFactoryPanel;
+
 public class MapFactoryController {
     private static MapFactoryController instance;
 

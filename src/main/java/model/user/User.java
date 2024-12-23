@@ -1,55 +1,99 @@
 package model.user;
 
-import model.exceptions.PswdIncorrectException;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serial;
 import java.io.Serializable;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+
 import model.game.Map;
 
 //储存用户信息，提供从读取存档文件创建user
 public class User implements Serializable {
-    /**
-     * Stores the information of the user
-     */
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    @Serial
     final private String userName;
 
     @Serial
-    private String pswd;
+    final private String pswd;
+
     @Serial
-    private Save save;
+    final private Save save;
 
-    /**
-     * to see if the pswd is correct or not
-     *
-     * @param pswd give a pswd to try
-     * @return true if the password is correct
-     */
-    boolean comparePassword(String pswd) {
-        return pswd.equals(this.pswd);
-    }
-
-    /**
-     * the constructor of User
-     * 
-     * @author
-     * @param userName the name of the user
-     * @param pswd     the passwoed of the account
-     */
-    User(String userName, String pswd) {
+    public User(String userName, String pswd) {
         this.userName = userName;
         this.pswd = pswd;
-        this.save= new Save();
+        this.save = new Save();
     }
 
-    public void changePassword(String oldPassword, String newPassword) throws PswdIncorrectException {
-        if (comparePassword(oldPassword)) {
-            this.pswd = newPassword;
-        } else {
-            throw new PswdIncorrectException();
+    // Serialize the object and include a hash of the data using a password
+    public void serializeWithHash(ObjectOutputStream oos)
+            throws NoSuchAlgorithmException, IOException {
+        // Serialize the object
+        oos.writeObject(this);
+
+        // Compute the hash of the serialized object with the password
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream tempOos = new ObjectOutputStream(baos);
+        tempOos.writeObject(this);
+        byte[] objectBytes = baos.toByteArray();
+        byte[] hash = computeHash(objectBytes, this.pswd);
+
+        // Write the hash to the file
+        oos.writeObject(hash);
+    }
+
+    // Deserialize the object and verify the hash using a password
+    public static User deserializeWithHash(ObjectInputStream ois, String password)
+            throws IOException, ClassNotFoundException, NoSuchAlgorithmException, SecurityException {
+        // Deserialize the object
+        User user = (model.user.User) ois.readObject();
+
+        // Read the stored hash
+        byte[] storedHash = (byte[]) ois.readObject();
+
+        // Compute the hash of the deserialized object with the password
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream tempOos = new ObjectOutputStream(baos);
+        tempOos.writeObject(user);
+        byte[] objectBytes = baos.toByteArray();
+        byte[] computedHash = computeHash(objectBytes, password);
+
+        // Verify the hash
+        if (!Arrays.equals(storedHash, computedHash)) {
+            throw new SecurityException("Data integrity check failed. The file may have been tampered with.");
         }
+
+        return user;
+    }
+
+    // Compute the hash of the given data using a password
+    private static byte[] computeHash(byte[] data, String password) throws NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        digest.update(password.getBytes());
+        return digest.digest(data);
+    }
+    
+    protected String getPswd() {
+        return pswd;
+    }
+
+    protected String getUserName(){
+        return userName;
     }
 
     void updateSave(Map map) {
         this.save.setCurrMap(map);
+    }
+
+    void updateSaveStageCompleted(int stageID, int minSteps, int minTime) {
+        this.save.updateStageInfo(stageID, minSteps, minTime);
     }
 
     Save getSave() {

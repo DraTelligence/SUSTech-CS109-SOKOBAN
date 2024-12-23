@@ -1,17 +1,14 @@
 package view.userSystem;
 
-import model.exceptions.UserAlreadyExistsException;
-
-import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Dialog;
-import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.io.InputStream;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -20,8 +17,12 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import controller.AppController;
 import controller.UserSystemController;
-import model.user.UserSystem;
+import model.exceptions.PswdIncorrectException;
+import model.exceptions.UserAlreadyExistsException;
+import model.exceptions.UserNotFoundException;
+import view.app.ContentDialog;
 
 public class LogInPanel extends JLayeredPane {
     private JTextField username;
@@ -29,19 +30,34 @@ public class LogInPanel extends JLayeredPane {
     final private JButton logInBtn;
     final private JButton signUpBtn;
 
-    @SuppressWarnings("unused")
-    public LogIn() {
+    @SuppressWarnings({ "unused" })
+    public LogInPanel() {
         this.setBounds(0, 0, 555, 785);
+        this.setVisible(true);
 
         // set background
-        ImageIcon icon = new ImageIcon(
-                "E:\\workSpace\\files\\java\\Sokoban\\data\\icons\\Backgrounds\\loginBackground.png");
-        icon.setImage(icon.getImage().getScaledInstance(555, 785, Image.SCALE_DEFAULT));
-        JLabel background = new JLabel(icon);
-        background.setBounds(0, 0, icon.getIconWidth(), icon.getIconHeight());
-
-        this.add(background);
-        this.moveToBack(background);
+        InputStream ins = getClass().getResourceAsStream("/icons/Backgrounds/loginBackground.png");
+        if (ins != null) {
+            try {
+                ImageIcon loginBackground = new ImageIcon(ImageIO.read(ins));
+                loginBackground.setImage(loginBackground.getImage().getScaledInstance(555, 785, Image.SCALE_DEFAULT));
+                JLabel BgImage = new JLabel(loginBackground);
+                BgImage.setBounds(0, 0, 555, 785);
+                BgImage.setVisible(true);
+                this.add(BgImage);
+                this.setComponentZOrder(BgImage, this.getComponentCount() - 1);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            } finally {
+                try {
+                    ins.close();
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        } else {
+            System.err.println("Background image not found.");
+        }
 
         // set a panel to contain other comps
         JPanel userSystemPanel = new JPanel();
@@ -56,74 +72,49 @@ public class LogInPanel extends JLayeredPane {
         this.username = createJTextField(new Point(230, 255), 160, 40);
         this.password = createJTextField(new Point(230, 335), 160, 40);
 
-        signUpBtn = createJButton(new Point(90, 435), 150, 40);
+        signUpBtn = createJButton(new Point(100, 435), 140, 40);
         signUpBtn.setContentAreaFilled(false);
-        logInBtn = createJButton(new Point(255, 435), 150, 40);
+        signUpBtn.setBorderPainted(false);
+        logInBtn = createJButton(new Point(285, 435), 140, 40);
         logInBtn.setContentAreaFilled(false);
+        logInBtn.setBorderPainted(false);
 
         userSystemPanel.add(username);
         userSystemPanel.add(password);
         userSystemPanel.add(logInBtn);
         userSystemPanel.add(signUpBtn);
 
+        this.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_ENTER -> logInBtn.doClick();
+                    case KeyEvent.VK_ESCAPE -> AppController.getInstance().switchToMainMenu();
+                }
+            }
+        });
+
         signUpBtn.addActionListener((ActionEvent e) -> {
             try {
                 UserSystemController.getInstance().signUp(username.getText(), password.getText());
+                new ContentDialog("Sign up successfully!").setVisible(true);
             } catch (UserAlreadyExistsException ex) {
-                JDialog dialog = new contentDialog("user already exists!");
-            } catch (NullPointerException ex){
-                JDialog dialog = new contentDialog("username or password cannot be empty!");
+                JDialog dialog = new ContentDialog("user already exists!");
+            } catch (NullPointerException ex) {
+                JDialog dialog = new ContentDialog("username or password cannot be empty!");
             }
         });
 
         logInBtn.addActionListener(e -> {
-            UserSystemController.getInstance().logIn(username.getText(), password.getText());
+            try {
+                UserSystemController.getInstance().logIn(username.getText(), password.getText());
+                new ContentDialog("Log in successfully!").setVisible(true);
+            } catch (UserNotFoundException ex) {
+                new ContentDialog("No such user!").setVisible(true);
+            } catch (PswdIncorrectException ex) {
+                new ContentDialog("Password incorrect!").setVisible(true);
+            }
         });
-    }
-
-    private class contentDialog extends JDialog {
-        public contentDialog(String text) {
-            super((Dialog) null);
-
-            JLabel contentLabel1 = new JLabel(text);
-
-            // set the font of two labels
-            contentLabel1.setFont(new Font("", Font.ROMAN_BASELINE, 16));
-
-            // set the color of the content
-            contentLabel1.setForeground(Color.black);
-
-            // set the location of two labels
-            contentLabel1.setBounds(245, 80, 280, 45);
-
-            contentLabel1.setAlignmentX(TOP_ALIGNMENT);
-
-            // set two buttons to confirm/cancel
-            JButton confirmButton = new JButton("好吧");
-            confirmButton.setBackground(Color.LIGHT_GRAY);
-            confirmButton.setBorderPainted(false);
-            confirmButton.setBounds(125, 186, 98, 31);
-
-            this.add(confirmButton);
-            this.add(contentLabel1);
-
-            this.setSize(new Dimension(350,300));
-            this.setLocationRelativeTo(null);
-            this.setVisible(true);
-
-            // add ActionListner to two buttons
-            confirmButton.addActionListener((ActionEvent e) -> {
-                this.setVisible(false);
-                this.dispose();
-            });
-        }
-    }
-
-    private static JLabel createJLabel(Point location, int width, int height, String text) {
-        JLabel jLabel = new JLabel(text);
-        jLabel.setSize(width, height);
-        jLabel.setLocation(location);
-        return jLabel;
     }
 
     private static JTextField createJTextField(Point location, int width, int height) {

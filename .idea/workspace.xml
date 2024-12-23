@@ -4,12 +4,46 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88ba9658-47e4-4771-85cd-992ab1993fc4" name="Changes" comment="Changes">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+    <list default="true" id="61354b7d-798e-45a1-9c42-1f633817156a" name="更改" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/java/controller/AppController.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main/java/controller/AppController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/java/controller/LevelSelectMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main/java/controller/LevelSelectMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/java/controller/MainMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main/java/controller/MainMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/java/controller/MapFactoryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main/java/controller/MapFactoryController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/java/controller/UserSystemController.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main/java/controller/UserSystemController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/java/model/user/Save.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main/java/model/user/Save.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/java/model/user/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main/java/model/user/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/java/model/user/UserSystem.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main/java/model/user/UserSystem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/java/view/MainFrame.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main/java/view/MainFrame.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/java/view/game/ButtonPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main/java/view/game/ButtonPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/java/view/game/buttonPanel/AreaButton$mouseAdapter.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main/java/view/game/buttonPanel/AreaButton$mouseAdapter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/java/view/game/buttonPanel/AreaButton.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main/java/view/game/buttonPanel/AreaButton.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/java/view/panels/LevelSelectMenuPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main/java/view/panels/LevelSelectMenuPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/java/view/panels/MainMenuPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main/java/view/panels/MainMenuPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/java/view/panels/UserSystemPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main/java/view/panels/UserSystemPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/java/view/userSystem/LogInPanel$contentDialog.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/java/view/userSystem/LogInPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main/java/view/userSystem/LogInPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/resources/maps/blankLevel" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/AppController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/AppController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/LevelSelectMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/LevelSelectMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/MainMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/MainMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/MapFactoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/MapFactoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/UserSystemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/UserSystemController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/user/Save.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/user/Save.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/user/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/user/UserSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/user/UserSystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/MainFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/game/ButtonPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/game/ButtonPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/game/MapPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/game/MapPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/game/buttonPanel/AreaButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/game/buttonPanel/AreaButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/game/mapPnaleComp/Crate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/game/mapPnaleComp/Crate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/panels/LevelSelectMenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/panels/LevelSelectMenuPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/panels/MainMenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/panels/MainMenuPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/panels/UserSystemPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/panels/UserSystemPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/userSystem/LogInPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/userSystem/LogInPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/maps/blankLevel" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/maps/blankLevel.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/maps/blankLevel" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,99 +66,46 @@
   }
 }</component>
   <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 0
 }</component>
-  <component name="ProjectId" id="2qQR2EZmWpUuq54Ywhvt6AYy9fO" />
+  <component name="ProjectId" id="2qaHjAnfX2O4DtdKPURAdP7IFab" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/workSpace/files/java/Sokoban&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;项目&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven.sokoban [clean].executor": "Run",
+    "Maven.sokoban [compile].executor": "Run",
+    "Maven.sokoban [test].executor": "Run",
+    "Maven.sokoban [validate].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true",
+    "应用程序.App.executor": "Debug"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="Sokoban_4" />
+    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="App" />
+      <module name="sokoban" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="Sokoban_4" />
-      <option name="filePath" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
-      <module name="Sokoban_4" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="Python.FlaskServer">
-      <module name="Sokoban_4" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="launchJavascriptDebuger" value="false" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="Tox" factoryName="Tox">
-      <module name="Sokoban_4" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <method v="2" />
-    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="应用程序.App" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -134,19 +115,18 @@
       </set>
     </attachedChunks>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="88ba9658-47e4-4771-85cd-992ab1993fc4" name="Changes" comment="" />
-      <created>1734592604325</created>
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="61354b7d-798e-45a1-9c42-1f633817156a" name="更改" comment="" />
+      <created>1734893908799</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1734592604325</updated>
-      <workItem from="1734592606085" duration="13000" />
-      <workItem from="1734592647611" duration="543000" />
-      <workItem from="1734593205719" duration="99000" />
-      <workItem from="1734593310992" duration="63000" />
-      <workItem from="1734593401681" duration="88000" />
+      <updated>1734893908799</updated>
+      <workItem from="1734893909809" duration="3078000" />
+      <workItem from="1734898871049" duration="263000" />
+      <workItem from="1734899183151" duration="3734000" />
+      <workItem from="1734927045954" duration="52000" />
     </task>
     <servers />
   </component>

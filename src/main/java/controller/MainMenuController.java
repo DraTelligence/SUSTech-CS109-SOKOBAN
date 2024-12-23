@@ -11,11 +11,15 @@ public class MainMenuController {
     private final MainMenuPanel view;
 
     private MainMenuController() {
-        view = new MainMenuPanel(this);
+        view = new MainMenuPanel();
 
         view.addMenuListener((ActionEvent e) -> {
             handleMenuAction(((JButton) e.getSource()).getText());
         });
+    }
+
+    void initPanel(){
+        view.setVisible(true);
     }
 
     public MainMenuPanel getView() {
@@ -31,9 +35,9 @@ public class MainMenuController {
 
     public void handleMenuAction(String action) {
         switch(action){
-            case"start"->AppController.getInstance().switchToLevelSelectMenu("levelSelectMenu");
+            case"start"->AppController.getInstance().switchToLevelSelectMenu();
             case"exit"->AppController.getInstance().exitProgram();
-            case"user"->AppController.getInstance().switchViews("userSystem");
+            case"user"->AppController.getInstance().switchToUserSystem();
         }
     }
 }

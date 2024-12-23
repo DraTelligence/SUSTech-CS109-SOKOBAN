@@ -2,6 +2,8 @@ package controller;
 
 import javax.swing.JPanel;
 
+import view.panels.LevelSelectMenuPanel;
+
 public class LevelSelectMenuController {
     private static LevelSelectMenuController instance;
 

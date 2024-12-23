@@ -24,8 +24,8 @@ public class FlashingTest {
         JPanel panel = new JPanel(new BorderLayout());
 
         // 创建带图片的 JLabel
-        ImageIcon icon1 = new ImageIcon("icons/Crates/crates1/crate.png"); // 替换为你的图片路径
-        ImageIcon icon2 = new ImageIcon("icons/Crates/crates1/crate_onTarget.png");
+        ImageIcon icon1 = new ImageIcon("src/main/java/icons/Crates/crates1/crate.png"); // 替换为你的图片路径
+        ImageIcon icon2 = new ImageIcon("src/main/java/icons/Crates/crates1/crate_onTarget.png");
 
         JLabel label = new JLabel(icon1) {
             @Override

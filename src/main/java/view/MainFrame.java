@@ -1,12 +1,10 @@
 package view;
 
-import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import controller.AppController;
@@ -16,11 +14,18 @@ import controller.AppController;
  * contains four different panels.
  */
 public class MainFrame extends JFrame {
-    private final CardLayout layout = new CardLayout();  
-    private final JPanel cardPanel = new JPanel(layout);
-    private final AppController appControllor = AppController.getInstance(layout,cardPanel);
+    private final AppController appController = AppController.getInstance();
 
-    public MainFrame() {
+    private static MainFrame instance;
+
+    public static MainFrame getInstance() {
+        if (instance == null) {
+            instance = new MainFrame();
+        }
+        return instance;
+    }
+
+    private MainFrame() {
         super("SOKOBAN");
 
         // initialize the frame
@@ -30,15 +35,18 @@ public class MainFrame extends JFrame {
         this.setResizable(false);
         this.setMaximizedBounds(getBounds());
 
-        // when the window is closed, let appControllor handle it
+        // when the window is closed, let appController handle it
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                appControllor.handleWindowClosing();
+                appController.handleWindowClosing();
             }
         });
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+    }
 
-        appControllor.start();
+    public void start(){
+        appController.start();
+        this.setVisible(true);
     }
 }

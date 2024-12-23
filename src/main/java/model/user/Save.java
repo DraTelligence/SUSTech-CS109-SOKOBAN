@@ -1,7 +1,11 @@
 package model.user;
 
-import java.io.Serial;
-import java.io.Serializable;
+import java.io.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import model.game.Map;
 
 /**
@@ -11,58 +15,70 @@ import model.game.Map;
  */
 
 class Save implements Serializable {
-    /**
-     * the number of the stages
-     */
-    final static private int STAGE_NUM = 6;
-
-    /**
-     * the completed or not situation of each stage
-     */
     @Serial
-    private boolean[] stagesComplete = new boolean[STAGE_NUM];
+    private static final long serialVersionUID = 1L;
+    private int totStages = 0;
 
-    /**
-     * the recorded minimum steps of each stage
-     */
-    @Serial
-    private int[] stageMinimumSteps = new int[STAGE_NUM];
+    private class StageInfo implements Serializable {
+        @Serial
+        private static final long serialVersionUID = 1L;
+        @Serial
+        private final int stageID;
+        @Serial
+        private boolean stageCompleted;
+        @Serial
+        private String author;
+        @Serial
+        private int minSteps;
+        @Serial
+        private int minTime;
+
+        protected StageInfo(int stageID, String author) {
+            this.stageID = stageID;
+            this.stageCompleted = false;
+            this.stageCompleted=false;
+            this.minSteps=Integer.MAX_VALUE;
+            this.minTime=Integer.MAX_VALUE;
+        }
+
+        protected StageInfo(int stageID, boolean stageCompleted, String author, int minSteps, int minTime) {
+            this.stageID = stageID;
+            this.stageCompleted = stageCompleted;
+            this.author = author;
+            this.minSteps = minSteps;
+            this.minTime = minTime;
+        }
+
+        protected void updateStageInfo(int minSteps, int minTime) {
+            this.stageCompleted = true;
+            this.minSteps = Math.min(this.minSteps, minSteps);
+            this.minTime = Math.min(this.minTime, minTime);
+        }
+    }
 
     @Serial
-    private long[] stageMinimumTime = new long[STAGE_NUM];
+    private ArrayList<StageInfo> stageList = new ArrayList<>();
 
     @Serial
     private Map currMap;
 
-    public Save(){
-        for(int i=0;i<STAGE_NUM;i++){
-            stagesComplete[i]=false;
-            stageMinimumSteps[i]=999;
-            stageMinimumTime[i]=999;
+    public Save() {
+        this.totStages=5;
+
+        for (int i = 0; i < totStages; i++) {
+            stageList.add(new StageInfo(i, false, "thereIsAStudio", Integer.MAX_VALUE, Integer.MAX_VALUE));
         }
     }
 
-    Map getCurrMap() {
+    public Map getCurrMap() {
         return this.currMap;
     }
 
     void setCurrMap(Map currMap) {
         this.currMap = currMap;
     }
-
-    void setMapCompletion(int levelNum, int step, int time) {
-        if (stagesComplete[levelNum]) {
-            if (this.stageMinimumSteps[levelNum] > step) {
-                this.stageMinimumSteps[levelNum] = step;
-            }
-
-            if (this.stageMinimumTime[levelNum] > time) {
-                this.stageMinimumTime[levelNum] = time;
-            }
-        } else {
-            this.stagesComplete[levelNum] = true;
-            this.stageMinimumSteps[levelNum] = step;
-            this.stageMinimumTime[levelNum] = time;
-        }
+    
+    void updateStageInfo(int stageID, int minSteps, int minTime) {
+        stageList.get(stageID).updateStageInfo(minSteps, minTime);
     }
 }

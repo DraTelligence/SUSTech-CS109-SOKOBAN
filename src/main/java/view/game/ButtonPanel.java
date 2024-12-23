@@ -24,12 +24,13 @@ public class ButtonPanel extends JLayeredPane{
 
         buttons=new ArrayList<>(6);
 
+        buttons.add(new ButtonHint());
         buttons.add(new ButtonLeft());
         buttons.add(new ButtonRight());
         buttons.add(new ButtonUp());
         buttons.add(new ButtonDown());
         buttons.add(new ButtonRewind());
-        buttons.add(new ButtonHint());
+
         
         this.add(new ButtonPanelBody());
         for(var bt: buttons){

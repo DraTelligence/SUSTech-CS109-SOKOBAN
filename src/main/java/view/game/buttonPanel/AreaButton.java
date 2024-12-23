@@ -28,6 +28,7 @@ public class AreaButton extends JButton{
         this.setBounds(0,0,555,785);
         this.setContentAreaFilled(false);
         this.setBorderPainted(false);
+        this.setOpaque(false);
 
         this.keyModifier = 0;
         this.keyCode = java.awt.event.KeyEvent.VK_E;

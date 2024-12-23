@@ -181,7 +181,7 @@ public class MapPanel extends JLayeredPane {
     private static OutOfMapWalls[][] readInitialMap() {
         OutOfMapWalls[][] result = new OutOfMapWalls[MAX_ROW + 2][MAX_COL + 2];
 
-        String dir = "data\\maps\\blanklevel";
+        String dir = "E:\\workSpace\\files\\java\\Sokoban\\src\\main\\resources\\maps\\blankLevel.txt";
 
         try {
             InputStream inp = new FileInputStream(dir);

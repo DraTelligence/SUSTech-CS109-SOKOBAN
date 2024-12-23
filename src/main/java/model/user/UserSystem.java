@@ -9,18 +9,21 @@ import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.NoSuchAlgorithmException;
 
 import model.exceptions.PswdIncorrectException;
 import model.exceptions.UserAlreadyExistsException;
 import model.exceptions.UserNotFoundException;
 import model.game.Map;
+import view.app.ContentDialog;
 
 /**
- * This class produces the accesse to manage users. Users should only be visited via this class's methods.
+ * This class produces the accesse to manage users. Users should only be visited
+ * via this class's methods.
  */
 
 public class UserSystem {
-    private User currentUser;
+    private User currentUser= null;
 
     /**
      * Produce the path of saves
@@ -71,16 +74,23 @@ public class UserSystem {
         this.currentUser = new User(userName, pswd);
 
         // create an archieve file for the user
+        save();
+    }
+
+    /**
+     * write the current user to file 
+     */
+    private void save(){
         try {
-            FileOutputStream fileOut = new FileOutputStream(getSavePath().toFile() + "\\" + userName + ".ser");
+            FileOutputStream fileOut = new FileOutputStream(getSavePath().toFile() + "\\" + currentUser.getUserName() + ".ser");
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
 
-            objectOut.writeObject(this.currentUser);
+            currentUser.serializeWithHash(objectOut);
 
             objectOut.close();
             fileOut.close();
-        } catch (IOException e) {
-            System.out.print(e.getMessage());
+        } catch (IOException | NoSuchAlgorithmException e) {
+            new ContentDialog("error occur here because: "+e.getMessage()).setVisible(true);
         }
     }
 
@@ -97,8 +107,6 @@ public class UserSystem {
         File directory = getSavePath().toFile();
         File[] fileList = directory.listFiles();
 
-        User temp;
-
         FileInputStream fin;
         ObjectInputStream oin;
 
@@ -111,21 +119,15 @@ public class UserSystem {
                         fin = new FileInputStream(f);
                         oin = new ObjectInputStream(fin);
 
-                        temp = (User) oin.readObject();
+                        this.currentUser = User.deserializeWithHash(oin, pswd);
 
                         fin.close();
                         oin.close();
-
-                        // check the pswd
-                        if (temp.comparePassword(pswd)) {
-                            this.currentUser = temp;
-                        } else {
-                            // pswd incorrect
-                            throw new PswdIncorrectException();
-                        }
-                    } catch (IOException | ClassNotFoundException e) {
-                        System.out.println(e.getMessage());
-                        System.exit(-1);
+                    } catch (IOException | ClassNotFoundException | NoSuchAlgorithmException e) {
+                        new ContentDialog(e.getMessage()).setVisible(true);
+                    } catch (SecurityException ex) {
+                        // pswd incorrect
+                        throw new PswdIncorrectException();
                     }
 
                     break;
@@ -136,6 +138,24 @@ public class UserSystem {
         if (!flag) {
             // user not found
             throw new UserNotFoundException();
+        }
+    }
+
+    public void updateSaveFile() {
+        try {
+            Path saveFilePath = getSavePath().resolve(this.currentUser.getUserName() + ".ser");
+            File saveFile = saveFilePath.toFile();
+
+            FileOutputStream fout= new FileOutputStream(saveFile);
+            ObjectOutputStream oout= new ObjectOutputStream(fout);
+
+            if (saveFile.exists()) {
+                saveFile.delete();
+            }
+
+            this.currentUser.serializeWithHash(oout);
+        } catch (IOException | NoSuchAlgorithmException e) {
+            System.out.print(e.getMessage());
         }
     }
 
@@ -158,10 +178,7 @@ public class UserSystem {
         this.currentUser.updateSave(map);
     }
 
-    public boolean checkLoggedIn(){
-        return this.currentUser==null;
+    public boolean checkLoggedIn() {
+        return this.currentUser != null;
     }
-
-    
-
 }

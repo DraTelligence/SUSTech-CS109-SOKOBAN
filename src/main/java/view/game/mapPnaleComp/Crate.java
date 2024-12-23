@@ -35,7 +35,7 @@ public class Crate extends JLabel {
     private String getUrl() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("data\\icons\\Crates\\crates").append(crateNum);
+        sb.append("icons\\Crates\\crates").append(crateNum);
         sb.append("\\crate").append(state).append(".png");
 
         return sb.toString();
